@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Jungle_Models.Models
 {
-    public class Client
+    public class Customer
     {
         [Key]
-        [Column("ClientID")]
-        public int ClientId { get; set; }
+        [Column("CustomerID")]
+        public int CustomerId { get; set; }
         [StringLength(50)]
         public string Prenom { get; set; } = null!;
         [StringLength(50)]

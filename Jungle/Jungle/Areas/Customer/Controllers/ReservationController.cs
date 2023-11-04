@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Jungle_MVC.Areas.Customer.Controllers
 {
-    public class ClientController : Controller
+    public class ReservationController : Controller
     {
         // GET: ClientController
         public ActionResult Index()

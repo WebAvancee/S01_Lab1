@@ -14,7 +14,7 @@ namespace Jungle_DataAccess.Data
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Guide> Guides { get; set; }
         public DbSet<Travel> Travels { get; set; }
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<TravelRecommendation> TravelRecommendations { get; set; }
 

@@ -28,9 +28,9 @@ namespace Jungle_Models.Models
 
         public bool StatusConfirme { get; set; }
 
-        [ForeignKey("Client")]
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
+        [ForeignKey("Customer")]
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
 
         [ForeignKey("Travel")]
         public int Id { get; set; }
