@@ -4,6 +4,7 @@ using Jungle_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jungle_DataAccess.Migrations
 {
     [DbContext(typeof(JungleDbContext))]
-    partial class JungleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231103235746_tableReservClient")]
+    partial class tableReservClient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,7 +200,8 @@ namespace Jungle_DataAccess.Migrations
 
                     b.HasKey("ReservationId");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientId")
+                        .IsUnique();
 
                     b.HasIndex("Id");
 
@@ -294,13 +297,13 @@ namespace Jungle_DataAccess.Migrations
             modelBuilder.Entity("Jungle_Models.Models.Reservation", b =>
                 {
                     b.HasOne("Jungle_Models.Models.Client", "Client")
-                        .WithMany("Reservations")
-                        .HasForeignKey("ClientId")
+                        .WithOne("reservation")
+                        .HasForeignKey("Jungle_Models.Models.Reservation", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Jungle_Models.Models.Travel", "Travel")
-                        .WithMany("Reservations")
+                        .WithMany()
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -337,7 +340,8 @@ namespace Jungle_DataAccess.Migrations
 
             modelBuilder.Entity("Jungle_Models.Models.Client", b =>
                 {
-                    b.Navigation("Reservations");
+                    b.Navigation("reservation")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Jungle_Models.Models.Country", b =>
@@ -353,11 +357,6 @@ namespace Jungle_DataAccess.Migrations
             modelBuilder.Entity("Jungle_Models.Models.Guide", b =>
                 {
                     b.Navigation("Travels");
-                });
-
-            modelBuilder.Entity("Jungle_Models.Models.Travel", b =>
-                {
-                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("Jungle_Models.Models.TravelRecommendation", b =>

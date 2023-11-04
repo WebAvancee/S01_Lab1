@@ -4,6 +4,7 @@ using Jungle_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jungle_DataAccess.Migrations
 {
     [DbContext(typeof(JungleDbContext))]
-    partial class JungleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231103235639_tableReservClientTravel")]
+    partial class tableReservClientTravel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,79 +23,6 @@ namespace Jungle_DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Jungle_Models.Models.Client", b =>
-                {
-                    b.Property<int>("ClientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ClientID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
-
-                    b.Property<string>("Adresse")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("CodePostal")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("Courriel")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("DateNaissance")
-                        .HasColumnType("date");
-
-                    b.Property<int>("LimiteCredit")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NoCarteCredit")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<string>("NoTelephone1")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("NoTelephone2")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Prenom")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(2)");
-
-                    b.Property<string>("Ville")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("ClientId");
-
-                    b.ToTable("Clients");
-                });
 
             modelBuilder.Entity("Jungle_Models.Models.Country", b =>
                 {
@@ -161,48 +90,6 @@ namespace Jungle_DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Guides");
-                });
-
-            modelBuilder.Entity("Jungle_Models.Models.Reservation", b =>
-                {
-                    b.Property<int>("ReservationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("ReservationID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservationId"), 1L, 1);
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateDepart")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("DateReservation")
-                        .HasColumnType("date");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NombrePlaces")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PourcentageRabais")
-                        .HasColumnType("int");
-
-                    b.Property<double>("PrixFinal")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("StatusConfirme")
-                        .HasColumnType("bit");
-
-                    b.HasKey("ReservationId");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("Id");
-
-                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Jungle_Models.Models.Travel", b =>
@@ -291,25 +178,6 @@ namespace Jungle_DataAccess.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("Jungle_Models.Models.Reservation", b =>
-                {
-                    b.HasOne("Jungle_Models.Models.Client", "Client")
-                        .WithMany("Reservations")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Jungle_Models.Models.Travel", "Travel")
-                        .WithMany("Reservations")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Travel");
-                });
-
             modelBuilder.Entity("Jungle_Models.Models.Travel", b =>
                 {
                     b.HasOne("Jungle_Models.Models.Destination", null)
@@ -335,11 +203,6 @@ namespace Jungle_DataAccess.Migrations
                     b.Navigation("TravelRecommendation");
                 });
 
-            modelBuilder.Entity("Jungle_Models.Models.Client", b =>
-                {
-                    b.Navigation("Reservations");
-                });
-
             modelBuilder.Entity("Jungle_Models.Models.Country", b =>
                 {
                     b.Navigation("Destinations");
@@ -353,11 +216,6 @@ namespace Jungle_DataAccess.Migrations
             modelBuilder.Entity("Jungle_Models.Models.Guide", b =>
                 {
                     b.Navigation("Travels");
-                });
-
-            modelBuilder.Entity("Jungle_Models.Models.Travel", b =>
-                {
-                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("Jungle_Models.Models.TravelRecommendation", b =>
