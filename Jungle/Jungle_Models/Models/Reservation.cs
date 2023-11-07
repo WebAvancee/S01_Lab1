@@ -28,6 +28,13 @@ namespace Jungle_Models.Models
 
         public bool StatusConfirme { get; set; }
 
+        public int? IdOption1 { get; set; } = null;
+
+        public int? IdOption2 { get; set; } = null;
+
+        public int? IdOption3 { get; set; } = null;
+
+
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }

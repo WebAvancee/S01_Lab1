@@ -1,6 +1,7 @@
 ﻿using Jungle_DataAccess.Data;
 using Jungle_DataAccess.Repository.IRepository;
 using Jungle_Models.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,18 +52,15 @@ namespace Jungle_DataAccess.Repository
         }
 
        
-        public bool ValidationPlacesDisponibles(int placesAReserver, int travelID)
-        {
-             
-                Travel travel = _db.Travels.Where(t => t.Id == travelID).FirstOrDefault();
-                
-            IEnumerable<Reservation> reservations = _db.Reservations.Where(r => r.Id == travelID && r.StatusConfirme == true).ToList();    
+        public bool ValidationPlacesDisponibles(int placesAReserver, Travel travel)
+        {                                            
+            IEnumerable<Reservation> reservations = _db.Reservations.Where(r => r.Id == travel.Id && r.StatusConfirme == true).ToList();    
 
             int placesReservees = reservations.Sum(r => r.NombrePlaces);
 
-            int placesDisponibles = travel.NombrePlaces - placesReservees; 
-            
-            if(placesDisponibles >= placesAReserver)
+           int placesDisponibles = travel.NombrePlacesMinimun - placesReservees; //
+
+            if (placesDisponibles >= placesAReserver)
             {
                 return true;
             }
@@ -72,24 +70,63 @@ namespace Jungle_DataAccess.Repository
         }
 
 
-        public double CalculePrixFinal (int placesAReserver, int travelID)
+        public double CalculePrixFinal (int placesAReserver, Travel travel)
         {
 
             double prixFinal = 0;
-
-            Travel travel = _db.Travels.Where(t => t.Id == travelID).FirstOrDefault();
+            if (placesAReserver <= 0 || travel.Id <= 0)
+                return 0;                     
 
             if (placesAReserver == 1)
             {
-               // prixFinal = placesAReserver*0
+                prixFinal = travel.Price;
+
+            }
+            if (placesAReserver > 1)
+            {
+                prixFinal = travel.Price*(1 + (placesAReserver-1)*0.8) ;
 
             }
 
-
-            return 0;
+            return prixFinal;
         }
 
+        public void ValidationStatutConfirme(int placesAReserver, Travel travel) 
+        {
+            
+            IEnumerable<Reservation> reservations = _db.Reservations.Where(r => r.Id == travel.Id && r.StatusConfirme == true).ToList();
 
+            int placesReservees = reservations.Sum(r => r.NombrePlaces);
+
+            int placesDisponibles = travel.NombrePlacesMinimun - placesReservees;
+
+            if(placesDisponibles == placesAReserver)
+            {
+                var travelAModifier = _db.Travels.FirstOrDefault(t => t.Id == travel.Id);
+
+                if (travelAModifier != null)
+                {
+                    travelAModifier.StatusConfirme = true;
+                    _db.SaveChanges();
+                }
+            }
+             
+        }
+
+        public void insertOption(List<Option> options,Reservation reservation ) 
+        {
+
+            if (options.Count <= 3)
+            { 
+                foreach (Option option in options) 
+                {
+                   // crear una tabla optionReservation 1 reservation tiene varias opciones max 3
+                }
+            }
+               
+            throw new NotImplementedException();
+            
+        }
 
 
     }

@@ -4,6 +4,7 @@ using Jungle_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jungle_DataAccess.Migrations
 {
     [DbContext(typeof(JungleDbContext))]
-    partial class JungleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231107000359_tableTravelStatut")]
+    partial class tableTravelStatut
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,28 +165,6 @@ namespace Jungle_DataAccess.Migrations
                     b.ToTable("Guides");
                 });
 
-            modelBuilder.Entity("Jungle_Models.Models.Option", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TravelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TravelId");
-
-                    b.ToTable("Options");
-                });
-
             modelBuilder.Entity("Jungle_Models.Models.Reservation", b =>
                 {
                     b.Property<int>("ReservationId")
@@ -204,15 +184,6 @@ namespace Jungle_DataAccess.Migrations
                         .HasColumnType("date");
 
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdOption1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdOption2")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdOption3")
                         .HasColumnType("int");
 
                     b.Property<int>("NombrePlaces")
@@ -264,7 +235,7 @@ namespace Jungle_DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(25)");
 
-                    b.Property<int>("NombrePlacesMinimun")
+                    b.Property<int>("NombrePlaces")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -323,17 +294,6 @@ namespace Jungle_DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("Jungle_Models.Models.Option", b =>
-                {
-                    b.HasOne("Jungle_Models.Models.Travel", "Travel")
-                        .WithMany("Options")
-                        .HasForeignKey("TravelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Travel");
                 });
 
             modelBuilder.Entity("Jungle_Models.Models.Reservation", b =>
@@ -402,8 +362,6 @@ namespace Jungle_DataAccess.Migrations
 
             modelBuilder.Entity("Jungle_Models.Models.Travel", b =>
                 {
-                    b.Navigation("Options");
-
                     b.Navigation("Reservations");
                 });
 

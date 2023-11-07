@@ -24,6 +24,8 @@ namespace Jungle_DataAccess.Repository
             TravelRecommendation= new TravelRecommendationRepository(db);
             Customer = new CustomerRepository(db);
             Reservation= new ReservationRepository(db);
+            Option = new OptionRepository(db);
+
 
 
         }
@@ -40,10 +42,10 @@ namespace Jungle_DataAccess.Repository
 
         public ICustomerRepository Customer { get; private set; }
 
-        public IReservationRepository Reservation { get; private set; } 
-        
-        
-        
+        public IReservationRepository Reservation { get; private set; }
+
+        public IOptionRepository Option { get; private set; }
+
         public void Dispose()
         {
             _db.Dispose();

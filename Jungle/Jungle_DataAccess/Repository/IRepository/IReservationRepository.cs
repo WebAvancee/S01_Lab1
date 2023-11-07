@@ -11,6 +11,11 @@ namespace Jungle_DataAccess.Repository.IRepository
     {
 
        void Update(Reservation reservation);
-        
+       bool VerificationDateDepart(DateTime dateDepart);
+       bool ValidationRabais(DateTime dateDepart);
+       bool ValidationPlacesDisponibles(int placesAReserver, Travel travelID);
+       double CalculePrixFinal(int placesAReserver, Travel travel);
+       void ValidationStatutConfirme(int placesAReserver, Travel travel);
+        void insertOption(List<Option> options, Reservation reservation);
     }
 }

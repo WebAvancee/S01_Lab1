@@ -30,7 +30,10 @@ namespace Jungle_Models.Models
         [Range(7,21)]
         public int Duration { get; set; }
 
-        public int NombrePlaces { get; set; }
+        [Range(20, 30)]
+        public int NombrePlacesMinimun { get; set; }
+
+        public bool StatusConfirme { get; set; }
 
         [ForeignKey("Destination")]
         public int DestinationId { get; set; }
@@ -45,5 +48,8 @@ namespace Jungle_Models.Models
         public TravelRecommendation TravelRecommendation { get; set; }
 
         public List<Reservation> Reservations { get; set; }
+
+        public List<Option> Options { get; set; }
+
     }
 }

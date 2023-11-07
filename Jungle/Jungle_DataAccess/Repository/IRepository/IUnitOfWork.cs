@@ -15,6 +15,7 @@ namespace Jungle_DataAccess.Repository.IRepository
         ITravelRecommendationRepository TravelRecommendation { get; }
         ICustomerRepository Customer { get; }
         IReservationRepository Reservation { get; }
+        IOptionRepository Option { get; }
 
         void Save();
     }
